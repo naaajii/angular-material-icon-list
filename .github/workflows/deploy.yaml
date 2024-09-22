@@ -1,0 +1,54 @@
+name: deploy
+
+on: 
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: setup environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      
+      - name: install packages
+        run: npm i
+
+      - name: build
+        run: npm run build:production
+
+      - name: artifact build
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist/angular-material-icon-list/browser/
+  deploy:
+    needs: build
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/download-artifact@v4
+        name: download artifact # these are downloaded from build job as you can't share files or folders within a job
+        with:
+          path: ./dist/angular-material-icon-list/browser/
+
+      - name: configure pages
+        uses: actions/configure-pages@v4
+
+      - name: deploy to github pages
+        id: deployment
+        uses: actions/deploy-pages@v4 

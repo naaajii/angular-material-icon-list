@@ -1,0 +1,90 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+
+$light-theme: mat.define-theme((color: (theme-type: light,
+        primary: mat.$rose-palette,
+      )));
+
+$dark-theme: mat.define-theme((color: (theme-type: dark,
+        primary: mat.$rose-palette,
+      )));
+
+:root {
+  @include mat.core-theme($light-theme);
+  @include mat.icon-theme($light-theme);
+  @include mat.form-field-theme($light-theme);
+  @include mat.snack-bar-theme($light-theme);
+  @include mat.select-theme($light-theme);
+  @include mat.option-theme($light-theme);
+
+
+  @include mat.icon-color($light-theme, $color-variant: primary);
+
+  --surface-color: #{mat.get-theme-color($light-theme, surface)};
+  --on-surface-variant-color: #{mat.get-theme-color($light-theme, on-surface-variant)};
+
+  --primary-container-color: #{mat.get-theme-color($light-theme, primary-container)};
+  --on-primary-container-color: #{mat.get-theme-color($light-theme, on-primary-container)};
+
+
+  .category-icon:hover {
+    cursor: pointer;
+    background-color: rgba(mat.get-theme-color($light-theme, on-surface-variant), 0.1);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .icon-two-tone {
+    color: unset;
+    filter: invert(9%) sepia(88%) saturate(6144%) hue-rotate(323deg) brightness(98%) contrast(102%);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include mat.form-field-color($dark-theme);
+    @include mat.snack-bar-color($dark-theme);
+    @include mat.select-color($dark-theme);
+    @include mat.option-color($dark-theme);
+    @include mat.button-color($dark-theme);
+  
+    @include mat.icon-color($dark-theme, $color-variant: primary);
+    --surface-color: #{mat.get-theme-color($dark-theme, surface)};
+    --on-surface-variant-color: #{mat.get-theme-color($dark-theme, on-surface-variant)};
+
+    --primary-container-color: #{mat.get-theme-color($dark-theme, primary-container)};
+    --on-primary-container-color: #{mat.get-theme-color($dark-theme, on-primary-container)};
+  }
+
+  .icon-two-tone {
+    color: unset;
+    filter: invert(92%) sepia(41%) saturate(6151%) hue-rotate(286deg) brightness(99%) contrast(115%);
+  }
+
+  .category-icon:hover {
+    background-color: rgba(mat.get-theme-color($dark-theme, on-surface-variant), 0.1);
+  }
+}
+
+
+// Comment out the line below if you want to use the pre-defined typography utility classes.
+// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
+// @include mat.typography-hierarchy($angular-material-icon-list-theme);
+
+// Comment out the line below if you want to use the deprecated `color` inputs.
+// @include mat.color-variants-backwards-compatibility($angular-material-icon-list-theme);
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { 
+  margin: 0; 
+  padding: 0px;
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  background: var(--surface-color);
+}
+
+.font-monospace {
+  font-family: monospace;
+}

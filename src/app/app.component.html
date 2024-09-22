@@ -1,0 +1,62 @@
+<app-navbar [title]="title"></app-navbar>
+
+<main>
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <h1 class="mat-headline-large">{{ title }}</h1>
+
+      <p>
+        This list contains all Material design icons around <span class="font-monospace">mat-icon</span> and can be
+        copied for instant use!
+      </p>
+    </div>
+  </section>
+
+  <section class="categories">
+    <mat-form-field class="form-field" ariaLabel="'select icon fontset'">
+      <mat-label>Icon Fontset</mat-label>
+      <mat-select [(value)]="fontSet" [tabIndex]="-1">
+        @for (fontSet of fontSets; track $index) {
+        <mat-option [value]="fontSet.key">{{ fontSet.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    @if (fontSet !== 'material-icons') {
+    @let fontSetURL = fontSet | fontSetURL;
+
+    @if (fontSet === 'material-icons-two-tone') {
+    <div class="info-container" tabindex="0">
+      <pre>// two tone icons are colored differently, use this tool to convert your HEX colors to filter: <a target="_blank" [href]="colorCodeToFilterURL">{{ colorCodeToFilterURL }}</a></pre>
+      <pre>// more info at: <a target="_blank" [href]="twoToneStackoverflowAnswerURL">{{ twoToneStackoverflowAnswerURL }}</a></pre>
+      <pre>// add this to your index.html</pre>
+      <pre class="font-set-url" (click)="copyFontSetURL(fontSetURL)">{{ fontSetURL }}</pre>
+    </div>
+    } @else {
+    <div class="info-container">
+      <pre>// add this to your index.html</pre>
+      <pre class="font-set-url" (click)="copyFontSetURL(fontSetURL)">{{ fontSetURL }}</pre>
+    </div>
+    }
+    }
+
+    @for (category of categories; track categoryIndex; let categoryIndex = $index)
+    {
+    <div class="category" [ariaLabel]="category.title + 'icons'"  tabindex="1">
+      <h4 class="mat-headline-medium" [ariaLabel]="category.title + 'icons'">{{ category.title }}</h4>
+
+      <div class="category-icons">
+        @for (icon of category.icons; track iconIndex; let iconIndex = $index) {
+        @let name = icon | iconNameToTitle;
+        <div class="category-icon" (click)="copyIcon(icon)" [ariaLabel]="name + ' icon'" tabindex="1">
+          <mat-icon [class.icon]="fontSet !== 'material-icons-two-tone'"
+            [class.icon-two-tone]="fontSet === 'material-icons-two-tone'" [fontSet]="fontSet">{{ icon }}</mat-icon>
+
+          <p class="mat-label-small">{{ name }}</p>
+        </div>
+        }
+      </div>
+    </div>
+    }
+  </section>
+</main>

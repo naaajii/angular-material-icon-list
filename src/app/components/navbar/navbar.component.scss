@@ -1,0 +1,19 @@
+.navbar {
+  background: var(--primary-container-color);
+  padding: 14px;
+
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+
+  &--item {
+    display: flex;
+    align-items: center;
+    color: var(--on-primary-container-color);
+
+    .github-icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
